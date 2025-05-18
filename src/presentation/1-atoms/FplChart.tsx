@@ -46,20 +46,32 @@ const FplChart: React.FC<FplChartProps> = ({ allTeamHistory }) => {
     loadZoomPlugin();
   }, []);
 
-  const getRandomColor = (alpha: number = 1): string => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
+  const pastelPalette = [
+    "#00FFFF",
+    "#FF00FF",
+    "#FFFF00",
+    "#FFA500",
+    "#00FF7F",
+    "#87CEFA",
+    "#FF7F50",
+    "#DA70D6",
+    "#FFD700",
+    "#FF1493",
+  ];
+
+  const getPastelColour = (index: number, alpha: number = 1): string => {
+    const base = pastelPalette[index % pastelPalette.length];
+    const [r, g, b] = base.match(/\w\w/g)!.map((x) => parseInt(x, 16));
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
-  const datasets = allTeamHistory.map((team) => {
-    const colour = getRandomColor(1);
+  const datasets = allTeamHistory.map((team, index) => {
+    const colour = getPastelColour(index, 1);
     return {
       label: team.teamName,
       data: team.history.map((entry) => entry.total_points),
       borderColor: colour,
-      backgroundColor: colour.replace(/[^,]+(?=\))/, "0.2"),
+      backgroundColor: getPastelColour(index, 0.2),
       fill: false,
       tension: 0.6,
       pointBackgroundColor: "white",
@@ -77,6 +89,9 @@ const FplChart: React.FC<FplChartProps> = ({ allTeamHistory }) => {
         : [],
     datasets,
   };
+
+  const totalGws = allTeamHistory[0]?.history.length ?? 0;
+  const defaultViewGws = 15;
 
   const chartOptions: ChartOptions<"line"> = {
     responsive: true,
@@ -120,6 +135,8 @@ const FplChart: React.FC<FplChartProps> = ({ allTeamHistory }) => {
     },
     scales: {
       x: {
+        min: Math.max(0, totalGws - defaultViewGws),
+        max: totalGws - 1,
         ticks: {
           color: "white",
         },
