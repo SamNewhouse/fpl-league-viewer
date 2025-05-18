@@ -20,12 +20,14 @@ const HomePage: NextPage<HomePageProps> = ({ leagueName, allTeamHistory }) => {
   }
 
   return (
-    <BaseLayout className="flex flex-col justify-center items-center min-h-screen p-4 bg-black">
-      <div className="w-full max-w-7xl">
-        <h1 className="text-3xl mb-6">
-          {leagueName ? leagueName : "League Name"}
-        </h1>
-        <FplChart allTeamHistory={allTeamHistory} />
+    <BaseLayout>
+      <div className="flex flex-col justify-center max-h-svh items-center">
+        <div className="w-full max-w-7xl h-svh py-3 sm:px-2 md:px-6">
+          <h1 className="text-3xl mb-3">
+            {leagueName ? leagueName : "League Name"}
+          </h1>
+          <FplChart allTeamHistory={allTeamHistory} />
+        </div>
       </div>
     </BaseLayout>
   );

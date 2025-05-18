@@ -141,7 +141,7 @@ const FplChart: React.FC<FplChartProps> = ({ allTeamHistory }) => {
   };
 
   return (
-    <div className="text-white bg-stone-950 p-2 sm:p-4 rounded-md shadow-lg w-full h-[500px] sm:h-[600px] md:h-[700px] overflow-x-auto">
+    <div className="flex text-white bg-stone-950 h-[calc(100%-3rem)] sm:h-[calc(100%-5rem)] p-1 sm:p-3 md:p-6 sm:rounded-lg">
       {!zoomLoaded ? (
         <p>Loading chart...</p>
       ) : (

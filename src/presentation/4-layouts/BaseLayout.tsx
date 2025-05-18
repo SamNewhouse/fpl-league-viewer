@@ -9,7 +9,7 @@ const BaseLayout: FC<Props> = ({ children, className }) => {
   return (
     <>
       <div
-        className={`min-h-screen bg-stone-900 text-white ${
+        className={`bg-stone-900 text-white ${
           className ? " " + className : ""
         }`}
       >
